@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="formulario.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Registro</a></li>
+                <li><a href="#">Contactanos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <form action="#" method="post">
+            <fieldset>
+                <legend>Registro Nuevos Usuarios</legend>
+                <div class="nombreCompleto">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" placeholder="Rodrigo" required>
+                </div>
+                <br>
+                <div class="nombreCompleto">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" placeholder="Neyra" required>
+                </div>
+                <br>
+                <div>
+                    <label for="correo">Correo</label>
+                    <input type="email" id="correo" placeholder="correo@ejemplo.com" required>
+                </div>
+                <br>
+                <div>
+                    <label for="contrasena">Contraseña</label>
+                    <input type="password" id="contrasena" required>
+                </div>
+                <br>
+                <div>
+                    <button type="submit">Registrar</button>
+                </div>
+            </fieldset>
+        </form>
+    </main>
+</body>
+</html>
