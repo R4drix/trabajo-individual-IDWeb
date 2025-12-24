@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <button class="upload-btn">
+        <button class="upload-btn" onclick="window.parent.postMessage('closeUpload', '*')">
             <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
             </svg>
@@ -87,7 +87,7 @@
                 <input type="text" placeholder="Buscar fotos, álbumes o colecciones...">
             </div>
 
-            <div class="header-actions">
+            <div class="header-actions" onclick="window.parent.postMessage('closeUpload', '*')">
                 <button class="upload-btn-header">Subir</button>
                 
                 <button class="icon-btn">
@@ -103,9 +103,9 @@
                 </button>
 
                 <div class="user-profile">
-                    <img src="https://i.pravatar.cc/100?img=5" alt="Ana García" class="user-avatar">
+                    <img src="https://play-lh.googleusercontent.com/vmfxXlXa_HffdEugEW4zwECIt-vqNssLg7xHQy110MrxeyCNYG33m1Esp9J3aEJtWfxt" alt="Ana García" class="user-avatar">
                     <div class="user-info">
-                        <div class="user-name">Ana García</div>
+                        <div class="user-name">NoobMaster69</div>
                         <div class="user-badge">Premium</div>
                     </div>
                 </div>
@@ -225,28 +225,10 @@
         </div>
     </div>
 
-    <script>
-        // Interactividad del menú
-        document.querySelectorAll('.menu-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
+    <div id="uploadOverlay" class="upload-overlay">
+        <iframe src="subir.html" class="upload-iframe"></iframe>
+    </div>
 
-        // Efecto hover en las cards
-        document.querySelectorAll('.photo-card').forEach(card => {
-            card.addEventListener('click', function() {
-                console.log('Foto seleccionada:', this.querySelector('.photo-title').textContent);
-            });
-        });
-
-        // Botón de subir fotos
-        document.querySelectorAll('.upload-btn, .upload-btn-header').forEach(btn => {
-            btn.addEventListener('click', function() {
-                alert('Función de subir fotos - Aquí se abriría el selector de archivos');
-            });
-        });
-    </script>
+    <script src="fotos.js"></script>
 </body>
 </html>
