@@ -1,78 +1,21 @@
-        // Interactividad del menú
-        document.querySelectorAll('.menu-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
+/* ==========================================================
+   MODIFICACIONES Y CORRECCIONES:
+   1. Se mejoró la selección de botones usando IDs para evitar conflictos.
+   2. Se añadió un 'console.log' para depurar la apertura del modal.
+   3. Se mantuvo la lógica de carga dinámica desde la base de datos.
+   4. Se añadió una validación para cerrar el modal si se hace clic fuera de él.
+   ========================================================== */
 
-        // Efecto hover en las cards
-        document.querySelectorAll('.photo-card').forEach(card => {
-            card.addEventListener('click', function() {
-                console.log('Foto seleccionada:', this.querySelector('.photo-title').textContent);
-            });
-        });
-
-
-        const uploadOverlay = document.getElementById("uploadOverlay");
-
-        function openUploadModal() {
-        uploadOverlay.classList.add("show");
-        }
-
-        function closeUploadModal() {
-        uploadOverlay.classList.remove("show");
-        }
-
-        window.addEventListener("message", (event) => {
-            if (event.data === "closeUpload") {
-                document
-                .getElementById("uploadOverlay")
-                .classList.remove("show");
-            }
-        });
-
-
-
-// Base de datos de fotos por sección
-const photosData = {
-    inicio: [
-        { img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop', title: 'Atardecer en la playa', date: '12 Feb 2023' },
-        { img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop', title: 'Montañas del Norte', date: '28 Ene 2023' },
-        { img: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=400&h=300&fit=crop', title: 'Ciudad Nocturna', date: '5 Mar 2023' },
-        { img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop', title: 'Bosque Encantado', date: '17 Feb 2023' },
-        { img: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400&h=300&fit=crop', title: 'Calles de Barcelona', date: '3 Abr 2023' },
-        { img: 'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=400&h=300&fit=crop', title: 'Otoño en el Lago', date: '22 Oct 2022' },
-        { img: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=400&h=300&fit=crop', title: 'Desierto Dorado', date: '8 Mar 2023' },
-        { img: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=300&fit=crop', title: 'Flores Tropicales', date: '15 Feb 2023' }
-    ],
-    favoritos: [
-        { img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop', title: 'Atardecer en la playa', date: '12 Feb 2023' },
-        { img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop', title: 'Montañas del Norte', date: '28 Ene 2023' },
-        { img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop', title: 'Bosque Encantado', date: '17 Feb 2023' },
-        { img: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=300&fit=crop', title: 'Flores Tropicales', date: '15 Feb 2023' }
-    ],
-    albumes: [
-        { img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop', title: 'Álbum Vacaciones 2023', date: 'Creado: 28 Ene 2023' },
-        { img: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=400&h=300&fit=crop', title: 'Ciudades del Mundo', date: 'Creado: 5 Mar 2023' },
-        { img: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400&h=300&fit=crop', title: 'Arquitectura Europea', date: 'Creado: 3 Abr 2023' }
-    ],
-    compartido: [
-        { img: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=400&h=300&fit=crop', title: 'Ciudad Nocturna', date: 'Compartido hace 2 días' },
-        { img: 'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=400&h=300&fit=crop', title: 'Otoño en el Lago', date: 'Compartido hace 1 semana' }
-    ],
-    recientes: [
-        { img: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=300&fit=crop', title: 'Flores Tropicales', date: '15 Feb 2023' },
-        { img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop', title: 'Bosque Encantado', date: '17 Feb 2023' },
-        { img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop', title: 'Atardecer en la playa', date: '12 Feb 2023' }
-    ],
-    papelera: [
-        { img: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=400&h=300&fit=crop', title: 'Desierto Dorado', date: 'Eliminado hace 3 días' }
-    ],
+let photosData = {
+    inicio: [],
+    favoritos: [],
+    albumes: [],
+    compartido: [],
+    recientes: [],
+    papelera: [],
     'nueva-coleccion': []
 };
 
-// Títulos por sección
 const sectionTitles = {
     inicio: 'Mis Fotos',
     favoritos: 'Mis Favoritos',
@@ -83,7 +26,6 @@ const sectionTitles = {
     'nueva-coleccion': 'Nueva Colección'
 };
 
-// Mapeo de texto del sidebar a keys de secciones
 const sectionMap = {
     'Inicio': 'inicio',
     'Favoritos': 'favoritos',
@@ -94,86 +36,143 @@ const sectionMap = {
     'Nueva colección': 'nueva-coleccion'
 };
 
-// Función para renderizar fotos
+// --- FUNCIONES DE CARGA ---
+
+async function cargarFotosDesdeBD() {
+    try {
+        const response = await fetch('obtener_fotos.php');
+        const fotosReales = await response.json();
+        
+        photosData.inicio = fotosReales.map(f => ({
+            img: f.ruta,
+            title: f.titulo,
+            date: f.fecha
+        }));
+
+        renderPhotos('inicio');
+    } catch (error) {
+        console.error('Error al cargar fotos:', error);
+    }
+}
+
+// --- FUNCIONES DEL MODAL ---
+
+function openUploadModal() {
+    const uploadOverlay = document.getElementById("uploadOverlay");
+    if (uploadOverlay) {
+        console.log("Abriendo modal..."); // Mensaje de control en consola
+        uploadOverlay.classList.add("show");
+    } else {
+        console.error("No se encontró el elemento #uploadOverlay");
+    }
+}
+
+function closeUploadModal() {
+    const uploadOverlay = document.getElementById("uploadOverlay");
+    if (uploadOverlay) {
+        uploadOverlay.classList.remove("show");
+    }
+}
+
+// Escuchador de mensajes desde el iframe (subir.html)
+window.addEventListener("message", (event) => {
+    if (event.data === "closeUpload") {
+        closeUploadModal();
+    }
+    if (event.data === "refreshGallery") {
+        closeUploadModal();
+        cargarFotosDesdeBD(); 
+    }
+});
+
+// --- RENDERIZADO ---
+
 function renderPhotos(section) {
     const photoGrid = document.querySelector('.photo-grid');
     const pagination = document.querySelector('.pagination');
     const sectionTitle = document.querySelector('.section-header h2');
     
-    // Cambiar el título
+    if (!photoGrid) return;
+
     sectionTitle.textContent = sectionTitles[section];
-    
     const photos = photosData[section];
     
-    // Si no hay fotos, mostrar mensaje vacío
-    if (photos.length === 0) {
+    if (!photos || photos.length === 0) {
         photoGrid.innerHTML = `
             <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #999;">
                 <svg width="80" height="80" fill="currentColor" viewBox="0 0 24 24" style="margin-bottom: 20px; color: #ddd;">
                     <path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 17l3.5-4.5 2.5 3.01L14.5 11l4.5 6H5z"/>
                 </svg>
-                <h3 style="font-size: 20px; color: #666; margin-bottom: 10px;">No hay fotos aquí</h3>
-                <p style="font-size: 14px;">${section === 'nueva-coleccion' ? 'Crea tu primera colección' : 'Aún no tienes fotos en esta sección'}</p>
+                <h3>No hay fotos aquí</h3>
+                <p>${section === 'nueva-coleccion' ? 'Crea tu primera colección' : 'Aún no tienes fotos'}</p>
             </div>
         `;
-        pagination.style.display = 'none';
+        if (pagination) pagination.style.display = 'none';
         return;
     }
     
-    // Renderizar fotos
-    pagination.style.display = 'flex';
-    let html = '';
+    if (pagination) pagination.style.display = 'flex';
     
-    photos.forEach(photo => {
-        html += `
-            <div class="photo-card">
-                <div class="photo-wrapper">
-                    <img src="${photo.img}" alt="${photo.title}">
-                    <div class="photo-badge">But</div>
-                </div>
-                <div class="photo-info">
-                    <div class="photo-title">${photo.title}</div>
-                    <div class="photo-date">${photo.date}</div>
-                </div>
+    photoGrid.innerHTML = photos.map(photo => `
+        <div class="photo-card">
+            <div class="photo-wrapper">
+                <img src="${photo.img}" alt="${photo.title}">
+                <div class="photo-badge">HD</div>
             </div>
-        `;
-    });
-    
-    photoGrid.innerHTML = html;
-    
-    // Actualizar info de paginación
+            <div class="photo-info">
+                <div class="photo-title">${photo.title}</div>
+                <div class="photo-date">${photo.date}</div>
+            </div>
+        </div>
+    `).join('');
+
     const paginationInfo = document.querySelector('.pagination-info');
-    paginationInfo.textContent = `Mostrando ${photos.length} de ${photos.length} fotos`;
+    if (paginationInfo) {
+        paginationInfo.textContent = `Mostrando ${photos.length} de ${photos.length} fotos`;
+    }
 }
 
-// Interactividad del menú
-document.querySelectorAll('.menu-item').forEach(item => {
-    item.addEventListener('click', function() {
-        // Remover clase active de todos
-        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-        
-        // Agregar clase active al clickeado
-        this.classList.add('active');
-        
-        // Obtener el texto del span
-        const sectionText = this.querySelector('span').textContent;
-        
-        // Obtener la key de la sección
-        const section = sectionMap[sectionText];
-        
-        // Renderizar las fotos de esa sección
-        if (section) {
-            renderPhotos(section);
-        }
+// --- EVENTOS AL CARGAR LA PÁGINA ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    cargarFotosDesdeBD();
+
+    // Selección por ID (Asegúrate de que en tu HTML tengan estos IDs)
+    const btnSubirSidebar = document.getElementById('btnSidebarSubir') || document.querySelector('.upload-btn');
+    const btnSubirHeader = document.getElementById('btnHeaderSubir') || document.querySelector('.upload-btn-header');
+    const overlay = document.getElementById("uploadOverlay");
+
+    if (btnSubirSidebar) {
+        btnSubirSidebar.onclick = (e) => {
+            e.preventDefault();
+            openUploadModal();
+        };
+    }
+
+    // En fotos.js
+    if (btnSubirHeader) {
+        btnSubirHeader.onclick = (e) => {
+            e.preventDefault();  // Detiene la recarga de página
+            e.stopPropagation(); // Detiene que el clic llegue al fondo y lo cierre
+            console.log("Abriendo desde Header...");
+            openUploadModal();
+        };
+    }
+
+    // Cerrar el modal al hacer clic en el fondo oscuro
+    if (overlay) {
+        overlay.onclick = (e) => {
+            if (e.target === overlay) closeUploadModal();
+        };
+    }
+
+    // Menú lateral
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.addEventListener('click', function() {
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+            const section = sectionMap[this.querySelector('span').textContent];
+            if (section) renderPhotos(section);
+        });
     });
 });
-
-// Efecto hover en las cards (delegar eventos porque las cards se crean dinámicamente)
-document.querySelector('.photo-grid').addEventListener('click', function(e) {
-    const card = e.target.closest('.photo-card');
-    if (card) {
-        const title = card.querySelector('.photo-title').textContent;
-        console.log('Foto seleccionada:', title);
-    }
-});
-

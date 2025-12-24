@@ -385,10 +385,14 @@
             display: flex;
             }
 
-            .upload-iframe {
-            width: 80%;
-            height: 90%;
-            border: none;
-            border-radius: 16px;
-            background: white;
+            /* Reemplaza tu bloque anterior con este en fotos.css */
+            #uploadOverlay .upload-iframe {
+                width: 500px;           /* Más ancho para dar aire a los lados */
+                height: 550px;          /* Más alto para evitar scroll innecesario */
+                border: none;
+                border-radius: 20px;    /* Mantén la estética redondeada */
+                background: white;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Sombra más elegante */
+                overflow: hidden;
+                display: block;         /* Asegura que se comporte como bloque para centrarlo */
             }
