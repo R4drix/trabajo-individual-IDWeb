@@ -1,111 +1,93 @@
+const form = document.getElementById('registerForm');
+const passwordInput = document.getElementById('contrasena');
+const confirmarInput = document.getElementById('confirmar');
+const errorMessage = document.getElementById('errorMessage');
+const registerBtn = document.getElementById('registerBtn');
 
-        const form = document.getElementById('registerForm');
-        const passwordInput = document.getElementById('contrasena');
-        const confirmarInput = document.getElementById('confirmar');
-        const errorMessage = document.getElementById('errorMessage');
-        const registerBtn = document.getElementById('registerBtn');
+// Validación de contraseña en tiempo real
+passwordInput.addEventListener('input', function () {
+    const password = this.value;
+    const reqLength = document.getElementById('reqLength');
+    const reqLetter = document.getElementById('reqLetter');
+    const reqNumber = document.getElementById('reqNumber');
 
-        // Validación de contraseña en tiempo real
-        passwordInput.addEventListener('input', function() {
-            const password = this.value;
-            const reqLength = document.getElementById('reqLength');
-            const reqLetter = document.getElementById('reqLetter');
-            const reqNumber = document.getElementById('reqNumber');
+    reqLength.classList.toggle('valid', password.length >= 6);
+    reqLength.classList.toggle('invalid', password.length < 6);
 
-            // Validar longitud
-            if (password.length >= 6) {
-                reqLength.classList.add('valid');
-                reqLength.classList.remove('invalid');
-            } else {
-                reqLength.classList.add('invalid');
-                reqLength.classList.remove('valid');
-            }
+    reqLetter.classList.toggle('valid', /[a-zA-Z]/.test(password));
+    reqLetter.classList.toggle('invalid', !/[a-zA-Z]/.test(password));
 
-            // Validar letra
-            if (/[a-zA-Z]/.test(password)) {
-                reqLetter.classList.add('valid');
-                reqLetter.classList.remove('invalid');
-            } else {
-                reqLetter.classList.add('invalid');
-                reqLetter.classList.remove('valid');
-            }
+    reqNumber.classList.toggle('valid', /[0-9]/.test(password));
+    reqNumber.classList.toggle('invalid', !/[0-9]/.test(password));
+});
 
-            // Validar número
-            if (/[0-9]/.test(password)) {
-                reqNumber.classList.add('valid');
-                reqNumber.classList.remove('invalid');
-            } else {
-                reqNumber.classList.add('invalid');
-                reqNumber.classList.remove('valid');
-            }
-        });
+// Validar coincidencia de contraseñas
+confirmarInput.addEventListener('input', function () {
+    this.setCustomValidity(
+        this.value !== passwordInput.value ? 'Las contraseñas no coinciden' : ''
+    );
+});
 
-        // Validar que las contraseñas coincidan
-        confirmarInput.addEventListener('input', function() {
-            if (this.value !== passwordInput.value) {
-                this.setCustomValidity('Las contraseñas no coinciden');
-            } else {
-                this.setCustomValidity('');
-            }
-        });
+// Envío del formulario
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
 
-        // Manejar envío del formulario
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const nombre = document.getElementById('nombre').value;
-            const email = document.getElementById('email').value;
-            const usuario = document.getElementById('usuario').value;
-            const contrasena = passwordInput.value;
-            const confirmar = confirmarInput.value;
+    const nombre = document.getElementById('nombre').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const usuario = document.getElementById('usuario').value.trim();
+    const contrasena = passwordInput.value;
+    const confirmar = confirmarInput.value;
 
-            // Validaciones
-            if (contrasena !== confirmar) {
-                showError('Las contraseñas no coinciden');
-                return;
-            }
+    // Validaciones finales
+    if (contrasena !== confirmar) {
+        showError('Las contraseñas no coinciden');
+        return;
+    }
 
-            if (contrasena.length < 6) {
-                showError('La contraseña debe tener al menos 6 caracteres');
-                return;
-            }
+    if (!/[a-zA-Z]/.test(contrasena) || !/[0-9]/.test(contrasena)) {
+        showError('La contraseña debe tener letras y números');
+        return;
+    }
 
-            if (!/[a-zA-Z]/.test(contrasena)) {
-                showError('La contraseña debe contener al menos una letra');
-                return;
-            }
+    registerBtn.disabled = true;
+    registerBtn.textContent = 'Creando cuenta...';
 
-            if (!/[0-9]/.test(contrasena)) {
-                showError('La contraseña debe contener al menos un número');
-                return;
-            }
-
-            // Simular registro exitoso
-            registerBtn.disabled = true;
-            registerBtn.textContent = 'Creando cuenta...';
-
-            // Guardar datos en localStorage (solo para demo)
-            const userData = {
-                nombre: nombre,
-                email: email,
-                usuario: usuario,
-                contrasena: contrasena
-            };
-
-            localStorage.setItem('userData', JSON.stringify(userData));
-
-            // Simular delay y redirigir
-            setTimeout(() => {
-                alert('¡Cuenta creada exitosamente! Ahora puedes iniciar sesión.');
+    // Enviar datos al servidor
+    fetch('registrar.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+            nombre,
+            email,
+            usuario,
+            contrasena
+        })
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Cuenta creada exitosamente');
                 window.location.href = 'index.html';
-            }, 1500);
+            } else {
+                showError(data.message || 'Error al registrar');
+                registerBtn.disabled = false;
+                registerBtn.textContent = 'Crear cuenta';
+            }
+        })
+        .catch(() => {
+            showError('Error de conexión con el servidor');
+            registerBtn.disabled = false;
+            registerBtn.textContent = 'Crear cuenta';
         });
+});
 
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.classList.add('show');
-            
-            setTimeout(() => {
-                errorMessage.classList.remove('show');
-            }, 5000);
-        }
+function showError(message) {
+    errorMessage.textContent = message;
+    errorMessage.classList.add('show');
+
+    setTimeout(() => {
+        errorMessage.classList.remove('show');
+    }, 5000);
+}
