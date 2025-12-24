@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhotoStorageApp - Iniciar Sesión</title>
+    <link rel="stylesheet" href="index.css">
+
+</head>
+<body>
+    <div class="left-section">
+        <!-- Elementos bokeh decorativos -->
+        <div class="bokeh" style="width: 60px; height: 60px; top: 10%; left: 15%; animation-delay: 0s;"></div>
+        <div class="bokeh" style="width: 40px; height: 40px; top: 20%; right: 20%; animation-delay: 1s;"></div>
+        <div class="bokeh" style="width: 80px; height: 80px; top: 5%; right: 10%; animation-delay: 2s;"></div>
+        <div class="bokeh" style="width: 50px; height: 50px; bottom: 15%; left: 10%; animation-delay: 1.5s;"></div>
+        <div class="bokeh" style="width: 30px; height: 30px; top: 40%; left: 5%; animation-delay: 0.5s;"></div>
+        <div class="bokeh" style="width: 45px; height: 45px; bottom: 25%; right: 15%; animation-delay: 2.5s;"></div>
+        
+        <div class="camera-setup">
+            <img src="https://images.unsplash.com/photo-1606293926075-69a00dbfde81?w=600&h=800&fit=crop" alt="Camera Setup">
+        </div>
+    </div>
+
+    <div class="right-section">
+        <div class="login-container">
+            <div class="logo">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 2L7.17 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4H16.83L15 2H9ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17Z" fill="#667eea"/>
+                    <circle cx="12" cy="12" r="3" fill="#667eea"/>
+                </svg>
+                <h1>PhotoStorageApp</h1>
+            </div>
+
+            <div class="welcome-text">
+                <h2>Bienvenido de nuevo</h2>
+                <p>Inicia sesión para acceder a tus fotos</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="usuario">Usuario</label>
+                    <input type="text" id="usuario" name="usuario" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contrasena">Contraseña</label>
+                    <input type="password" id="contrasena" name="contrasena" required>
+                </div>
+
+                <button type="submit" class="login-btn">Iniciar sesión</button>
+
+                <div class="links">
+                    <a href="#crear">Crear cuenta nueva</a>
+                    <a href="#recuperar">¿Olvidaste tu contraseña?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const usuario = document.getElementById('usuario').value;
+            const contrasena = document.getElementById('contrasena').value;
+            
+            console.log('Usuario:', usuario);
+            console.log('Contraseña:', contrasena);
+            
+            alert('Formulario enviado! Revisa la consola.');
+        });
+    </script>
+</body>
+</html>
