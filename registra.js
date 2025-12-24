@@ -53,7 +53,7 @@ form.addEventListener('submit', function (e) {
     registerBtn.textContent = 'Creando cuenta...';
 
     // Enviar datos al servidor
-    fetch('registrar.php', {
+    fetch('registra.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
