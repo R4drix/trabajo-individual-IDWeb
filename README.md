@@ -4,7 +4,7 @@
 https://github.com/R4drix/trabajo-individual-IDWeb
 
 ## 🌐 URL del proyecto hospedado
-gallery.infinityfree.me
+gallerym.infinityfree.me
 
 ## 📝 Descripción del proyecto
 Galería de Recuerdos es una aplicación web que permite a los usuarios almacenar y visualizar fotografías de manera organizada, simulando un álbum digital de recuerdos. El proyecto cuenta con una interfaz moderna e intuitiva que facilita la subida de imágenes mediante un sistema de carga integrado, mostrando las fotos directamente en la galería sin necesidad de recargar la página. El objetivo principal es ofrecer una experiencia sencilla y agradable para conservar recuerdos importantes en formato digital.
