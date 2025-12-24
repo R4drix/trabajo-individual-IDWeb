@@ -51,44 +51,7 @@
 
         // Manejar envío del formulario
         form.addEventListener('submit', function(e) {
-
-            const contrasena = passwordInput.value;
-            const confirmar = confirmarInput.value;
-
-            // Validar que coincidan
-            if (contrasena !== confirmar) {
-                e.preventDefault();
-                showError('Las contraseñas no coinciden');
-                return;
-            }
-
-            // Validar longitud
-            if (contrasena.length < 6) {
-                e.preventDefault();
-                showError('La contraseña debe tener al menos 6 caracteres');
-                return;
-            }
-
-            // Validar letra
-            if (!/[a-zA-Z]/.test(contrasena)) {
-                e.preventDefault();
-                showError('La contraseña debe contener al menos una letra');
-                return;
-            }
-
-            // Validar número
-            if (!/[0-9]/.test(contrasena)) {
-                e.preventDefault();
-                showError('La contraseña debe contener al menos un número');
-                return;
-            }
-
-            // ✅ Si llega aquí, NO se cancela el submit
-            // El formulario se envía a registrar.php automáticamente
-            registerBtn.disabled = true;
-            registerBtn.textContent = 'Creando cuenta...';
-        });
-
+            e.preventDefault();
             
             const nombre = document.getElementById('nombre').value;
             const email = document.getElementById('email').value;
